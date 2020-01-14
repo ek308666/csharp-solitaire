@@ -9,36 +9,38 @@ namespace csharp_solitaire.src.game
     class Deck
     {
         private List<Card> deckList = new List<Card>();
+        private static Random rng = new Random();
 
         public Deck()
         {
-            FillDeck();
+            Init();
+            Shuffle();
         }
 
-        private void FillDeck()
+        private void Init()
         {
             if (deckList.Count > 0) {
                 deckList.Clear();
             }
 
-            //init Spades
+            //init Cards
             for (int i = 1; i <= 13; i++) {
-                deckList.Add(new Card(i, CardSuit.SPADE, CardColor.BLACK));
+                deckList.Add(new Card(i, CardSuit.SPADE));
+                deckList.Add(new Card(i, CardSuit.HEART));
+                deckList.Add(new Card(i, CardSuit.DIAMOND));
+                deckList.Add(new Card(i, CardSuit.CLUB));
             }
+        }
 
-            //init Hearts
-            for (int i = 1; i <= 13; i++) {
-                deckList.Add(new Card(i, CardSuit.HEART, CardColor.BLACK));
-            }
-
-            //init Diamonds
-            for (int i = 1; i <= 13; i++) {
-                deckList.Add(new Card(i, CardSuit.DIAMOND, CardColor.BLACK));
-            }
-
-            //init Clubs
-            for (int i = 1; i <= 13; i++) {
-                deckList.Add(new Card(i, CardSuit.CLUB, CardColor.BLACK));
+        public void Shuffle()
+        {
+            int n = deckList.Count;
+            while (n > 1) {
+                n--;
+                int k = rng.Next(n + 1);
+                Card temp = deckList[k];
+                deckList[k] = deckList[n];
+                deckList[n] = temp;
             }
         }
 
